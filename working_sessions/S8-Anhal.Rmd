@@ -1,0 +1,58 @@
+---
+title: "session8-Anhal"
+output: html_document
+date: "2022-08-01"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(gapminder)
+library(tidyverse)
+```
+
+```{r}
+gapminder <- gapminder
+
+ggplot(gapminder, aes(x =log(gdpPercap),col= year, y = lifeExp, size =pop ))+
+  geom_point(alpha=0.3, color ="#ea9999")+
+  geom_smooth(method = lm, color="#4F6AA8")+
+  facet_wrap(~continent, scales = "free")+
+  theme_bw()
+
+```
+
+```{r}
+con <- gapminder %>% 
+  group_by(continent) %>%
+  summarise(mean=mean(pop))
+
+```
+
+```{r}
+ggplot(con, aes(x =continent, y =mean,col= continent ))+
+  geom_point()+
+  theme_minimal()
+```
+
+##EX
+
+```{r}
+data <- read_csv("https://raw.githubusercontent.com/ScienceParkStudyGroup/r-lesson-based-on-ohi-data-training/gh-pages/data/se.csv")
+```
+
+```{r}
+plot <- ggplot(data,aes(x = park_name, y=visitors, color = park_name))+
+  geom_jitter(alpha=0.5)+
+  coord_flip()+
+  theme_bw()
+
+```
+
+```{r}
+library(plotly)
+ggplotly(plot)
+
+```
